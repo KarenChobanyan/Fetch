@@ -28,10 +28,8 @@ function renderPosts(posts, users) {
     let nameDiv = document.createElement("div")
     nameDiv.classList.add("nameDiv")
     let userNum = i
-    if (userNum > 10) {
+    if (userNum >= 10) {
       userNum = Math.ceil(i % users.length)
-    } else if (userNum == 10) {
-      userNum = 0
     }
     nameDiv.innerText = users[userNum].name
     idDiv.setAttribute("id", posts[i].id)
@@ -64,14 +62,14 @@ async function renderComments() {
   let title = this.getElementsByClassName("postHeaderDiv")[0].innerText
   let post = this.getElementsByClassName("postBodyDiv")[0].innerText
   let divForName = fullWatchPost.querySelector("#forUser")
-  divForName.onclick = async()=>{
+  divForName.onclick = async () => {
     let users = await getUsers()
-    let user = users.filter((el=>el.name==name))
+    let user = users.filter((el => el.name == name))
     renderUsers(user)
     closeButton.click()
   }
   divForName.innerText = name
-  
+
   let divForTitle = fullWatchPost.getElementsByClassName("postTitle")[0]
   divForTitle.innerText = title
   let divForPost = fullWatchPost.querySelector("#post")
@@ -121,18 +119,12 @@ async function renderComments() {
 
 };
 
-
 async function getComments(el) {
   let id = el.lastElementChild.id
   let comment = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
   let result = await comment.json()
   return result
 };
-
-
-
-
-
 
 class Comment {
   constructor(body, id, email) {
